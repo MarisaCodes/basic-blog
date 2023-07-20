@@ -1,0 +1,30 @@
+:root {
+  --primary: #1eaedb;
+}
+input[type="file"] {
+  display: none;
+}
+.wrapper {
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrapper div,
+.wrapper input[type="submit"] {
+  width: 45%;
+  min-width: 240px;
+}
+.cstm-file {
+  display: flex;
+  gap: 10px;
+  /* padding: 10px 0; */
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  cursor: pointer;
+}

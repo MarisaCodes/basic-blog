@@ -1,13 +1,36 @@
 <div class="container">
   <nav class="row">
-    <div class="four nav-item columns">
+    <div class="four nav-item columns mobile-nav">
       <img class="brand" src="images/brand.svg" alt="" />
-      <span class="brand-text">BasicBlog</span>
+      <span class="brand-text">
+        <a href="/">BasicBlog</a>
+      </span>
+    </div>
+    <div class="burger-container">
+      <input type="checkbox" id="burger-toggle" />
+      <label for="burger-toggle" class="burger">
+        <span class="slice"></span>
+        <span class="slice"></span>
+        <span class="slice"></span>
+      </label>
+      <div class="drawer">
+        <ul class="nav-list">
+          <li class="4 columns nav-item secondary-btn"><a href="#">Home</a></li>
+          <li class="4 columns nav-item secondary-btn">
+            <a href="#">Login</a>
+          </li>
+          <li class="4 columns nav-item primary-btn">
+            <a href="#">Sign Up</a>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- <div class="nav-item two columns"></div> -->
     <div class="four nav-item columns nav-gap"></div>
-    <div class="two columns nav-item secondary-btn">Login</div>
-    <div class="two columns nav-item primary-btn">Sign Up</div>
-    <!-- <div class="dropdown nav-item two columns">marisa &#9660;</div> -->
+
+    <a href="" class="two columns nav-item secondary-btn">Login</a>
+    <a href="/signup" class="two columns nav-item primary-btn"> Sign Up </a>
+    <!-- <div class="nav-item four columns profile">marisa &#9660;</div> -->
   </nav>
+  <hr />
 </div>
