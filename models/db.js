@@ -12,8 +12,5 @@ const sql = postgres(
   `postgres://${url_data.username}:${url_data.pswd}@localhost:${url_data.port}/${url_data.db_name}`
 );
 
-sql`select column_name from information_schema.columns where table_name = 'users'`.then(
-  console.log
-);
 
 //module.exports = sql;
