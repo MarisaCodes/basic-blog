@@ -17,28 +17,26 @@
               required
             />
           </div>
-          <div class="twelve columns">
-            <label for="pswd">Password</label>
-            <input
-              class="u-full-width"
-              type="password"
-              name="pswd"
-              id="pswd"
-              required
-            />
-            <!-- <input type="submit" value="register" /> -->
-          </div>
-        </div>
-        <div class="wrapper">
-          <div>
-            <input type="file" name="profile" id="profile" />
-            <label class="cstm-file" for="profile"
-              ><span>Profile Picture (optional)</span>
-              <img src="images/file_upload.svg" width="40" height="40" alt="" />
-            </label>
-          </div>
+          <label for="pswd">Password</label>
+          <input
+            class="u-full-width"
+            type="password"
+            name="pswd"
+            id="pswd"
+            required
+          />
+          <input type="file" name="profile" id="profile" />
+          <label class="cstm-file twelve columns" for="profile"
+            ><span>Profile Picture (optional)</span>
+            <img src="images/file_upload.svg" width="40" height="40" alt="" />
+          </label>
+          <input
+            type="submit"
+            class="button-primary u-full-width"
+            value="submit"
+          />
 
-          <input type="submit" class="button-primary" value="submit" />
+          <!-- <input type="submit" value="register" /> -->
         </div>
       </form>
     </div>

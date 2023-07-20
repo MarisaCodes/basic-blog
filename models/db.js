@@ -11,6 +11,5 @@ const url_data = {
 const sql = postgres(
   `postgres://${url_data.username}:${url_data.pswd}@localhost:${url_data.port}/${url_data.db_name}`
 );
-
-
-//module.exports = sql;
+sql`select user_name from users where user_name = 'reimu'`.then(console.log)
+module.exports = sql;

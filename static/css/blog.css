@@ -1,0 +1,41 @@
+.blog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  box-shadow: 0 0 9px rgba(0, 0, 0, 0.2);
+}
+.blog > h5,
+hr,
+.blog > input[type="button"] {
+  width: 100%;
+  display: block;
+}
+input[type="button"] {
+  margin: 0 !important;
+}
+h5,
+.content-wrapper {
+  padding: 20px;
+}
+h5,
+hr {
+  margin: 0;
+}
+.summary {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content {
+  display: none;
+}
+@media (min-width: 550px) {
+  form {
+    width: 80%;
+    margin: 0 auto;
+  }
+}

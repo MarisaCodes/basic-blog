@@ -7,6 +7,9 @@ ul {
 nav {
   overflow-x: hidden;
 }
+.nav-wrapper hr {
+  margin: 20px 0;
+}
 .brand {
   width: fit-content;
   max-height: 40px;
@@ -39,10 +42,10 @@ nav > .secondary-btn {
   display: none;
 }
 .primary-btn,
-.secondary-btn  {
+.secondary-btn {
   text-decoration: none;
 }
-.primary-btn  {
+.primary-btn {
   color: white;
 }
 .primary-btn {
@@ -52,7 +55,7 @@ nav > .secondary-btn {
   cursor: pointer;
 }
 .primary-btn:hover,
-.primary-btn:hover{
+.primary-btn:hover {
   background-color: white;
   color: black;
 }
@@ -107,9 +110,9 @@ nav > .secondary-btn {
 .drawer {
   display: none;
 }
-.drawer > ul {
-  padding: 20px 20px;
-  margin-top: 50px;
+ul > a {
+  display: block;
+  margin: 10px 0;
 }
 
 .burger-container input[type="checkbox"]:checked ~ .drawer {
