@@ -1,0 +1,76 @@
+:root {
+  --primary: #1eaedb;
+}
+
+/*reset*/
+h5 {
+  margin: 0 !important;
+}
+div.tab-content > div.write > textarea {
+  float: none !important;
+}
+label {
+  display: flex !important;
+  align-items: center;
+}
+.write > label > img {
+  max-width: 32px;
+  object-fit: scale-down;
+  display: inline;
+  padding: 0px 10px;
+}
+.write > label > span {
+  color: #999;
+  font-size: small;
+}
+.tabs {
+  border: 1px solid lightgray;
+  border-bottom: none;
+  display: flex;
+}
+.tabs div {
+  width: 80px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: black;
+}
+.tabs div:hover {
+  background-color: #ddd;
+  color: black;
+}
+.tabs div.active {
+  background-color: var(--primary);
+  color: white;
+}
+.tab-content {
+  border: 1px solid lightgray;
+  padding: 10px;
+}
+.tab-content > div {
+  word-wrap: break-word;
+  hyphens: auto;
+}
+code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}
+.preview img,
+.md-guide img {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  aspect-ratio: 4/3;
+  object-fit: scale-down;
+}
+.hide {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .preview img,
+  .md-guide img {
+    max-width: 700px;
+    max-height: 400px;
+  }
+}

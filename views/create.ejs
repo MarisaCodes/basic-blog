@@ -1,7 +1,118 @@
 <%- include("partials/head.ejs",{title:"Create Blog",css_links:[
-    ""
+    "css/create.css","css/normalize.css",
+    "//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
 ]}) %>
 <%- include('partials/navbar.ejs') %>
-</div>
 
+<form class="container" action="">
+    <label for="title">
+        <h5>Title</h5>
+    </label>
+    <input style="font-size: larger;" class="twelve columns u-full-width" type="text" name="title" id="title"
+    placeholder="Title goes here..."
+    required
+    >
+    <div class="tabs">
+        <div>Write</div>
+        <div>Preview</div>
+        <div>M&#8681; Guide</div>
+    </div>
+    <div class="tab-content">
+        <div class="write hide">
+            <label for="post">Blog
+                <img src="images/md.svg" alt="logo of markdown">
+                <span>
+                    (*markdown support)
+                </span>
+            </label>
+            <textarea name="post" id="post" cols="30" rows="60"
+            style="height: 30vh !important; resize: vertical;"
+            class="twelve columns u-full-width"
+            placeholder="Blog post goes here..."
+            required
+            ></textarea>
+        </div>
+        
+        <div class="preview hide">
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="md-guide hide">
+        </div>
+    </div>
+    <input 
+    style="margin-top: 20px;"
+    type="submit" class="button-primary" value="submit">
+    
+</form>
+</div>
+<script src="
+https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js
+"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    if(!localStorage.getItem("user")){
+        location.replace("/")
+    }
+    const md = window.markdownit({
+  html:         false,        // Enable HTML tags in source
+  xhtmlOut:     false,        // Use '/' to close single tags (<br />).
+                              // This is only for full CommonMark compatibility.
+  breaks:       true,        // Convert '\n' in paragraphs into <br>
+  langPrefix:   'language-',  // CSS language prefix for fenced blocks. Can be
+                              // useful for external highlighters.
+  linkify:      true,        // Autoconvert URL-like text to links
+
+  // Enable some language-neutral replacement + quotes beautification
+  typographer:  true,
+
+  // Double + single quotes replacement pairs, when typographer enabled,
+  // and smartquotes on. Could be either a String or an Array.
+  //
+  // For example, you can use '«»„“' for Russian, '„“‚‘' for German,
+  // and ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] for French (including nbsp).
+  quotes: '“”‘’',
+
+  // Highlighter function. Should return escaped HTML,
+  // or '' if the source string is not changed and should be escaped externaly.
+  // If result starts with <pre... internal wrapper is skipped.
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code>' +
+               hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+               '</code></pre>';
+      } catch (__) {}
+    }
+
+    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+  }
+
+});
+    // preview markdown
+const preview_el = {
+    title:document.querySelector('.preview > div:nth-child(1)'),
+    post:document.querySelector('.preview > div:nth-child(2)')
+}
+const form_el = {
+    title: document.querySelector('#title'),
+    post:document.querySelector('#post') //textarea
+}
+
+form_el.post.addEventListener('input',update_post)
+form_el.title.addEventListener('input',update_title)
+function update_title(e){
+    const title = "### "+ form_el.title.value.trim()+"\n---"
+    preview_el.title.innerHTML = md.render(title.trim())
+}
+function update_post(e){
+    const post = e.target.value.trim()
+    preview_el.post.innerHTML = md.render(post.trim())
+}
+const md_guide_=  document.querySelector('.md-guide')
+const md_guide_content = `<%= md_guide %>`
+md_guide_.innerHTML = md.render(md_guide_content)
+</script>
+<script src="js/create.js"></script>
 <%- include('partials/footer.ejs') %>
