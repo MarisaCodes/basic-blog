@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
-const { router } = require("./routes/user_routes");
+const user_router = require("./routes/user_routes");
+const blogs_router = require("./routes/blog_routes");
 require("dotenv").config();
 
 const app = express();
@@ -14,10 +15,12 @@ app.use(express.static("static"));
 app.get("/", (req, res) => {
   res.locals.user = null;
   res.render("index");
-  return
+  return;
 });
 
-// user handling routes
-app.use("/", router);
+// handling auth routes
+app.use("/", user_router);
+// handling blog logic routes (crud routes)
+app.use("/", blogs_router);
 
 app.listen(process.env.PORT);

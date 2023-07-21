@@ -5,14 +5,14 @@ const {
   post_login,
   get_login,
 } = require("../controllers/users");
-const router = express.Router();
+const user_router = express.Router();
 
 // signup
-router.get("/signup", get_sign_up);
-router.post("/signup", post_sign_up);
+user_router.get("/signup", get_sign_up);
+user_router.post("/signup", post_sign_up);
 
 // login
-router.get("/login", get_login);
-router.post("/login", post_login);
+user_router.get("/login", get_login);
+user_router.post("/login", post_login);
 
-module.exports = { router };
+module.exports = user_router;

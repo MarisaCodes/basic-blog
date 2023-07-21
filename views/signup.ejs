@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <%- include("partials/head.ejs", {title:"sign up!",signup:true}) %>
+  <%- include("partials/head.ejs", {title:"sign up!",css_links:[
+  "css/signup.css"
+]}) %>
   <body>
     <%- include("partials/navbar.ejs") %>
-  </div>
-    <div class="container">
       <form action="/signup" method="post">
         <div class="row">
           <div class="twelve columns">
@@ -47,11 +45,10 @@
         </div>
       </form>
     </div>
-    <%- include("partials/footer.ejs") %>
     <script>
       if(localStorage.getItem("user")){
         window.location.replace("/")
       }
     </script>
-  </body>
-</html>
+    <%- include("partials/footer.ejs") %>
+
