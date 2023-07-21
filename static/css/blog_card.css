@@ -33,9 +33,23 @@ hr {
 .content {
   display: none;
 }
+.content-wrapper img {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  aspect-ratio: 4/3;
+  object-fit: scale-down;
+}
+
 @media (min-width: 550px) {
   form {
     width: 80%;
     margin: 0 auto;
+  }
+}
+@media (min-width: 768px) {
+  .content-wrapper img {
+    max-width: 700px;
+    max-height: 400px;
   }
 }

@@ -3,7 +3,7 @@
 }
 
 nav {
-  position: sticky;
+  position: sticky !important;
   top: 0;
   z-index: 100;
   background-color: white;
@@ -166,7 +166,7 @@ div.nav-list > a {
 }
 
 .burger-container input[type="checkbox"]:checked ~ .drawer {
-  top: 30px;
+  top: 40px;
   transition: all 0.5s ease;
   z-index: 5;
 }
