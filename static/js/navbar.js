@@ -23,3 +23,24 @@ if (!localStorage.getItem("user")) {
   nouser.login.classList.add("hide");
   nouser.signup.classList.add("hide");
 }
+
+// for burger menu in phone:
+
+const nav_list = document.querySelectorAll(".nav-list > a");
+
+for (let i = 1; i < nav_list.length; i++) {
+  const a = nav_list[i];
+  if (localStorage.getItem("user")) {
+    if (i < 3) {
+      a.classList.add("hide");
+    } else {
+      a.classList.remove("hide");
+    }
+  } else {
+    if (i < 3) {
+      a.classList.remove("hide");
+    } else {
+      a.classList.add("hide");
+    }
+  }
+}

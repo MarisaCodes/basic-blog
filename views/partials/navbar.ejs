@@ -13,34 +13,27 @@
         <span class="slice"></span>
         <span class="slice"></span>
       </label>
+
       <div class="drawer">
         <div class="nav-list">
-          <a class="secondary-btn" href="/"
-            >Home</a
-          >
-          <a class="secondary-btn" href="#"
-            >Login</a
-          >
-          <a class="primary-btn" href="/signup"
-            >Sign Up</a
-          >
+          <!--user not logged in-->
+          <a class="secondary-btn" href="/">Home</a>
+          <a class="secondary-btn" href="/login">Login</a>
+          <a class="primary-btn" href="/signup">Sign Up</a>
 
           <!-- user already logged in: -->
-          <a class="secondary-btn" href="/"
-            >Profile</a
-          >
-          <a class="secondary-btn" href="/"
-            >Create Blogs</a
-          >
-          <a class="secondary-btn" href="/"
-            >Your Blogs</a
-          >
+          <a class="secondary-btn" href="#">Profile</a>
+          <a class="secondary-btn" href="#">Create Blogs</a>
+          <a class="secondary-btn" href="#">Your Blogs</a>
+          <a href="/?logout=true" class="secondary-btn">logout</a>
         </div>
       </div>
     </div>
     <div class="four nav-item columns nav-gap"></div>
 
-    <a href="/login" class="hide two columns nav-item login secondary-btn">Login</a>
+    <a href="/login" class="hide two columns nav-item login secondary-btn"
+      >Login</a
+    >
     <a href="/signup" class="hide two columns nav-item signup primary-btn">
       Sign Up
     </a>
@@ -55,7 +48,9 @@
         <a href="#">Your blogs</a>
       </div>
     </div>
-    <a href="/?logout=true" class="hide two columns logout nav-item secondary-btn"
+    <a
+      href="/?logout=true"
+      class="hide two columns logout nav-item secondary-btn"
       >Logout</a
     >
   </nav>

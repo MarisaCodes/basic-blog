@@ -43,6 +43,10 @@
       </form>
     </div>
     <%- include("partials/footer.ejs") %>
-
+    <script>
+      if(localStorage.getItem("user")){
+        window.location.replace("/")
+      }
+    </script>
   </body>
 </html>

@@ -27,14 +27,24 @@ const post_sign_up = (req, res) => {
       if (unique) {
         const hash = crypto.createHash("sha256");
         const pswd_hash = hash.update(pswd).digest("hex");
-
-        return await sql`insert into public.users (user_name, password_hash) values (${username}, ${pswd_hash})`;
+        const user = [
+          {
+            user_name: username,
+            password_hash: pswd_hash,
+          },
+        ];
+        return await sql`
+        insert into public.users ${sql(user)}
+        returning *
+        `;
       } else {
         throw Error("This username is taken");
       }
     })
-    .then(() => {
-      res.locals.user = username;
+    .then((rep) => {
+      console.log(rep);
+      const user = rep[0];
+      res.locals.user = user.user_name;
       res.render("index");
       return;
     })
@@ -61,7 +71,7 @@ const post_login = (req, res) => {
     if (rep.length) {
       res.locals.user = rep[0].user_name;
       res.render("index");
-      return
+      return;
     }
   });
 };
