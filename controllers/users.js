@@ -67,13 +67,20 @@ const post_login = (req, res) => {
   sql`
   select user_name, password_hash from users where user_name = ${username}
   and password_hash = ${pswd_hash}
-  `.then((rep) => {
-    if (rep.length) {
-      res.locals.user = rep[0].user_name;
-      res.render("index");
-      return;
-    }
-  });
+  `
+    .then((rep) => {
+      if (rep.length) {
+        res.locals.user = rep[0].user_name;
+        res.render("index");
+        return;
+      } else {
+        res.render("login", { error: "😔 wrong username or password..." });
+        return;
+      }
+    })
+    .catch((err) => {
+      res.render("login", { error: err.message });
+    });
 };
 
 module.exports = { get_sign_up, post_sign_up, post_login, get_login };
