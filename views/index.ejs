@@ -8,14 +8,36 @@
       flex-direction: column;
       gap: 70px;
     }
+    @media (min-width: 320px) {
+      .blog-wrapper {
+        width: 95%;
+        margin: 0 auto;
+      }
+    }
   </style>
   <body>
     <%- include("partials/navbar.ejs") %>
-    <div class="container blog-wrapper">
+    <div class="blog-wrapper">
       <%- include("partials/blog.ejs") %> <%- include("partials/blog.ejs") %>
       <%- include("partials/blog.ejs") %> <%- include("partials/blog.ejs") %>
       <%- include("partials/blog.ejs") %> <%- include("partials/blog.ejs") %>
       <%- include("partials/blog.ejs") %>
     </div>
+  </div>
+
+    <script>
+      if (!localStorage.getItem("user")) {
+        const user = "<%=user%>";
+        localStorage.setItem("user", user);
+      }
+      const query = window.location.search
+      const params = new URLSearchParams(query)
+      const logout = params.get("logout")
+      if(logout){
+        localStorage.removeItem("user")
+        window.location.replace("/")
+      }
+    </script>
+    <%- include("partials/footer.ejs") %>
   </body>
 </html>

@@ -14,19 +14,49 @@
         <span class="slice"></span>
       </label>
       <div class="drawer">
-        <ul class="nav-list">
-          <a class="4 columns nav-item secondary-btn" href="/">Home</a>
-          <a class="4 columns nav-item secondary-btn" href="#">Login</a>
-          <a class="4 columns nav-item primary-btn" href="/signup">Sign Up</a>
-        </ul>
+        <div class="nav-list">
+          <a class="secondary-btn" href="/"
+            >Home</a
+          >
+          <a class="secondary-btn" href="#"
+            >Login</a
+          >
+          <a class="primary-btn" href="/signup"
+            >Sign Up</a
+          >
+
+          <!-- user already logged in: -->
+          <a class="secondary-btn" href="/"
+            >Profile</a
+          >
+          <a class="secondary-btn" href="/"
+            >Create Blogs</a
+          >
+          <a class="secondary-btn" href="/"
+            >Your Blogs</a
+          >
+        </div>
       </div>
     </div>
-    <!-- <div class="nav-item two columns"></div> -->
     <div class="four nav-item columns nav-gap"></div>
 
-    <a href="" class="two columns nav-item secondary-btn">Login</a>
-    <a href="/signup" class="two columns nav-item primary-btn"> Sign Up </a>
-    <!-- <div class="nav-item four columns profile">marisa &#9660;</div> -->
+    <a href="/login" class="hide two columns nav-item login secondary-btn">Login</a>
+    <a href="/signup" class="hide two columns nav-item signup primary-btn">
+      Sign Up
+    </a>
+
+    <div class="hide nav-item profile-wrapper two columns dropdown">
+      <span class="profile"></span>
+      <div class="dropdown-content">
+        <a href="#">Profile</a>
+        <hr />
+        <a href="#">Create Blogs</a>
+        <hr />
+        <a href="#">Your blogs</a>
+      </div>
+    </div>
+    <a href="/?logout=true" class="hide two columns logout nav-item secondary-btn"
+      >Logout</a
+    >
   </nav>
   <hr />
-</div>

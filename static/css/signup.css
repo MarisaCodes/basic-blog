@@ -28,3 +28,10 @@ input[type="file"] {
   cursor: pointer;
   margin-bottom: 20px;
 }
+.error{
+  border: 1px solid rgb(250, 79, 79) !important;
+  border-radius: 4px;
+}
+.error-text{
+  color: rgb(161, 18, 18) !important;
+}

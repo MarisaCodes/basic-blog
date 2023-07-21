@@ -5,7 +5,7 @@
     <%- include("partials/navbar.ejs") %>
   </div>
     <div class="container">
-      <form action="/signup" method="post">
+      <form action="/login" method="post">
         <div class="row">
           <div class="twelve columns">
             <label <% if (error) {  %>
@@ -33,25 +33,16 @@
             id="pswd"
             required
           />
-          <input type="file" name="profile" id="profile" />
-          <label class="cstm-file twelve columns" for="profile"
-            ><span>Profile Picture (optional)</span>
-            <img src="images/file_upload.svg" width="40" height="40" alt="" />
-          </label>
           <input
             type="submit"
             class="button-primary u-full-width"
-            value="submit"
+            value="login"
           />
 
         </div>
       </form>
     </div>
     <%- include("partials/footer.ejs") %>
-    <script>
-      if(localStorage.getItem("user")){
-        window.location.replace("/")
-      }
-    </script>
+
   </body>
 </html>

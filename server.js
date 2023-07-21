@@ -12,7 +12,9 @@ app.use(express.json({ type: "application/json" }));
 app.use(express.static("static"));
 // homepage
 app.get("/", (req, res) => {
+  res.locals.user = null;
   res.render("index");
+  return
 });
 
 // user handling routes

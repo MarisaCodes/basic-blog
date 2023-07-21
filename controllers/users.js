@@ -1,25 +1,69 @@
 const crypto = require("crypto");
 const sql = require("../models/db");
 
-// get signup page
+// get signup page controller
 const get_sign_up = (req, res) => {
-  res.render("signup");
+  res.render("signup", { error: false });
+  return;
+};
+// post signup info helper function
+
+const is_user_unique = async (username) => {
+  return sql`select user_name from public.users where user_name = ${username}`.then(
+    (rep) => {
+      if (!rep.length) {
+        return true;
+      }
+      return false;
+    }
+  );
+};
+// post signup info controller
+const post_sign_up = (req, res) => {
+  const { username, pswd } = req.body;
+  sql
+    .begin(async (sql) => {
+      const unique = await is_user_unique(username);
+      if (unique) {
+        const hash = crypto.createHash("sha256");
+        const pswd_hash = hash.update(pswd).digest("hex");
+
+        return await sql`insert into public.users (user_name, password_hash) values (${username}, ${pswd_hash})`;
+      } else {
+        throw Error("This username is taken");
+      }
+    })
+    .then(() => {
+      res.locals.user = username;
+      res.render("index");
+      return;
+    })
+    .catch((err) => {
+      res.render("signup", { error: err.message });
+      return;
+    });
 };
 
-// post signup info
-const is_user_unique = (username) => {
-  sql`select user_name from public.users where user_name = ${username}`
-  .then()
+//login controller get
+const get_login = (req, res) => {
+  res.render("login", { error: false });
+  return;
 };
-const post_sign_up = (req, res) => {
+// login controller post
+const post_login = (req, res) => {
   const { username, pswd } = req.body;
   const hash = crypto.createHash("sha256");
   const pswd_hash = hash.update(pswd).digest("hex");
-  sql`insert into public.users (user_name, password_hash) values (${username}, ${pswd_hash})`
-    .then((rep) => {
-      res.json(rep);
-    })
-    .catch(console.log);
+  sql`
+  select user_name, password_hash from users where user_name = ${username}
+  and password_hash = ${pswd_hash}
+  `.then((rep) => {
+    if (rep.length) {
+      res.locals.user = rep[0].user_name;
+      res.render("index");
+      return
+    }
+  });
 };
 
-module.exports = { get_sign_up, post_sign_up };
+module.exports = { get_sign_up, post_sign_up, post_login, get_login };
