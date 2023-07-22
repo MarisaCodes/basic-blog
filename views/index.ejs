@@ -4,7 +4,7 @@
   
   %>
   <body>
-    <%- include("partials/navbar.ejs") %>
+    <%- include("partials/navbar.ejs", {user}) %>
     <div class="blog-wrapper">
       <%- include("partials/blog.ejs") %> <%- include("partials/blog.ejs") %>
       <%- include("partials/blog.ejs") %> <%- include("partials/blog.ejs") %>
@@ -14,17 +14,7 @@
   </div>
 
     <script>
-      if (!localStorage.getItem("user")) {
-        const user = "<%=user%>";
-        localStorage.setItem("user", user);
-      }
-      const query = window.location.search
-      const params = new URLSearchParams(query)
-      const logout = params.get("logout")
-      if(logout){
-        localStorage.removeItem("user")
-        window.location.replace("/")
-      }
+
     </script>
     <%- include("partials/footer.ejs") %>
 

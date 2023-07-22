@@ -21,7 +21,7 @@
           <a class="secondary-btn" href="/login">Login</a>
           <a class="primary-btn" href="/signup">Sign Up</a>
 
-          <!-- user already logged in: -->
+          <!-- user logged in: -->
           <a class="secondary-btn" href="#">Profile</a>
           <a class="secondary-btn" href="/create">Create Blogs</a>
           <a class="secondary-btn" href="#">Your Blogs</a>
@@ -31,15 +31,18 @@
     </div>
     <div class="four nav-item columns nav-gap"></div>
 
-    <a href="/login" class="hide two columns nav-item login secondary-btn"
+    <% if (!user) { %>
+     
+    <a href="/login" class="two columns nav-item login secondary-btn"
       >Login</a
     >
-    <a href="/signup" class="hide two columns nav-item signup primary-btn">
+    <a href="/signup" class="two columns nav-item signup primary-btn">
       Sign Up
     </a>
+    <% } else { %>
 
-    <div class="hide nav-item profile-wrapper two columns dropdown">
-      <span class="profile"></span>
+    <div class="nav-item profile-wrapper two columns dropdown">
+      <span class="profile"><%=user.user_name%></span>
       <div class="dropdown-content">
         <a href="#">Profile</a>
         <hr />
@@ -50,8 +53,9 @@
     </div>
     <a
       href="/?logout=true"
-      class="hide two columns logout nav-item secondary-btn"
+      class="two columns logout nav-item secondary-btn"
       >Logout</a
     >
+    <%}%>
   </nav>
   <hr />

@@ -2,7 +2,7 @@
   "css/signup.css"
 ]}) %>
   <body>
-    <%- include("partials/navbar.ejs") %>
+    <%- include("partials/navbar.ejs", {user}) %>
       <form class="signup-form-wrapper" action="/signup" method="post">
         <div class="row">
           <div class="twelve columns">
@@ -46,9 +46,6 @@
       </form>
     </div>
     <script>
-      if(localStorage.getItem("user")){
-        window.location.replace("/")
-      }
     </script>
     <%- include("partials/footer.ejs") %>
 

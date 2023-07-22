@@ -2,7 +2,7 @@
   "css/signup.css"
 ]}) %>
   <body>
-    <%- include("partials/navbar.ejs") %>
+    <%- include("partials/navbar.ejs", {user}) %>
       <form class="signup-form-wrapper" action="/login" method="post">
         <div class="row">
           <div class="twelve columns">
