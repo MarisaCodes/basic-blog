@@ -18,14 +18,16 @@
         <div class="nav-list">
           <!--user not logged in-->
           <a class="secondary-btn" href="/">Home</a>
+          <% if (!user) {%>
           <a class="secondary-btn" href="/login">Login</a>
           <a class="primary-btn" href="/signup">Sign Up</a>
-
+          <%} else {%>
           <!-- user logged in: -->
-          <a class="secondary-btn" href="#">Profile</a>
+          <a class="secondary-btn" href="#"><%=user.user_name%></a>
           <a class="secondary-btn" href="/create">Create Blogs</a>
           <a class="secondary-btn" href="#">Your Blogs</a>
-          <a href="/?logout=true" class="secondary-btn">logout</a>
+          <a href="/logout" class="secondary-btn">logout</a>
+          <%}%>
         </div>
       </div>
     </div>

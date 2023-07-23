@@ -59,10 +59,7 @@ const post_sign_up = (req, res) => {
             httpOnly: true,
             sameSite: "strict",
           });
-          res.render("index", {
-            error: null,
-            user: { user_name: rep[0].user_name },
-          });
+          res.redirect("/");
         })
         .catch(() => {
           res.render("signup", {

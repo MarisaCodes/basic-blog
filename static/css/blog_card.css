@@ -15,23 +15,39 @@ hr,
 input[type="button"] {
   margin: 0 !important;
 }
-h5,
+h2,
 .content-wrapper {
-  padding: 20px;
+  display: inline;
+  width: fit-content;
 }
-h5,
+h2,
 hr {
-  margin: 0;
+  margin: 0 !important;
 }
-.summary {
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 10px;
+}
+.title > .time {
+  font-size: x-small;
+  font-family: "Courier New", Courier, monospace;
+  background-color: #4094ad;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+}
+.content {
   display: -webkit-box;
   -webkit-line-clamp: 4;
+  word-break: break-word;
+  hyphens: auto;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-.content {
-  display: none;
+  margin: 10px;
 }
 .content-wrapper img {
   display: block;

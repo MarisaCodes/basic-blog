@@ -4,11 +4,21 @@
   flex-direction: column;
   gap: 70px;
 }
+code {
+  font-size: medium !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}
 @media (min-width: 320px) {
   .blog-wrapper {
     width: 95%;
-    margin: 0 auto;
+    margin: 20px auto !important;
   }
+}
+.empty {
+  padding: 20px;
+  color: #666;
+  font-size: x-large;
 }
 @media (min-width: 768px) {
   .blog-wrapper {

@@ -3,7 +3,7 @@ require("dotenv").config();
 // middleware to run in a get request to authenticate
 function auth_token(req, res, next) {
   const cookie = req.cookies;
-  const token = cookie ? cookie.token : null;
+  const token = cookie ? cookie?.token : null;
   if (token) {
     jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
       if (error) {
@@ -21,9 +21,12 @@ function auth_token(req, res, next) {
               const token = jwt.sign(
                 { user_name: username },
                 process.env.TOKEN_SECRET,
-                { expiresIn: 10 }
+                { expiresIn: `${process.env.access_expire}` }
               );
-              res.cookie("token", token);
+              res.cookie("token", token, {
+                httpOnly: true,
+                sameSite: "strict",
+              });
               req.user = decoded;
             }
           }

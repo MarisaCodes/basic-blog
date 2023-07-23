@@ -120,11 +120,13 @@ nav > .secondary-btn {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  padding: 10px;
+  margin: 0 !important;
 }
 .burger span {
   height: 2px;
   background-color: var(--primary);
-  width: 20px;
+  width: 30px;
 }
 .burger-container > input[type="checkbox"] {
   cursor: pointer;

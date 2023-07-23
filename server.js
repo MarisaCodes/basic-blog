@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const user_router = require("./routes/user_routes");
 const blogs_router = require("./routes/blog_routes");
 const cookieParser = require("cookie-parser");
-const auth_token = require("./funcs/auth");
+const index_router = require("./routes/index_routes");
 
 require("dotenv").config();
 
@@ -18,14 +18,12 @@ app.use(express.static("static"));
 app.use(cookieParser());
 
 // homepage
+app.use("/", index_router);
+// logout redirect
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.clearCookie("refresh_token");
   res.redirect("/");
-});
-app.get("/", auth_token, (req, res) => {
-  res.render("index", { user: req.user });
-  return;
 });
 // handling auth routes
 app.use("/", user_router);

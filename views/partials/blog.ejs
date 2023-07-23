@@ -1,39 +1,11 @@
 <div class="blog">
-  <h5>Title goes here</h5>
+  <div class="title">
+    <h2><%=title%></h2>
+    <span class="time"><%=Date(updated_at).toLocaleString()%></span>
+  </div>
   <hr />
   <div class="content-wrapper">
-    <div class="summary">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus,
-      voluptas dolore minima hic, repudiandae illo consequatur qui consequuntur
-      necessitatibus pariatur fuga maxime autem rerum aspernatur laudantium quo,
-      numquam iste quod itaque sint non nulla architecto. Officia ipsa tenetur
-      fuga omnis, ratione eveniet odit, sed iste magni nemo qui ab culpa
-      expedita laborum molestiae obcaecati tempore rem molestias exercitationem
-      sunt corporis. Minus velit cum corrupti veniam veritatis, libero fugit,
-      laboriosam porro incidunt reiciendis quo maxime et voluptates obcaecati
-      non consequuntur alias rerum? Error sunt, quae in quaerat ab ad dolorum
-      quas nihil facilis beatae, libero facere, omnis repellendus perspiciatis?
-      Unde, esse.
-    </div>
-    <div class="content">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-      <p>
-        Velit numquam reprehenderit, fuga libero eius fugit soluta odit
-        explicabo nulla nisi dolor exercitationem! Suscipit modi at, libero
-        voluptate amet, enim, aliquam quibusdam ipsa placeat quam ducimus vel
-        magni ullam dignissimos laboriosam ad laborum eveniet inventore.
-        Incidunt quaerat aut repudiandae porro, error sit harum facere quod
-        nobis quia? Optio, possimus! Laudantium, ipsam at. Voluptatibus numquam
-        facilis consequatur aspernatur.
-      </p>
-      <img src="images/blog-assets/bocchi.png" alt="" />
-      <p>
-        Quam corporis aliquid incidunt saepe alias, tempore vel dolore! Unde
-        voluptas similique quae odit ea magni velit error obcaecati, delectus
-        eum incidunt consectetur explicabo molestiae iusto quam, pariatur, harum
-        dignissimos amet! Provident, autem voluptates!
-      </p>
-    </div>
+    <div class="content"><%-content%></div>
   </div>
   <input
     type="button"

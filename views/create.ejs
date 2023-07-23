@@ -4,17 +4,18 @@
 ]}) %>
 <%- include('partials/navbar.ejs', {user}) %>
 
-<form class="container" action="">
+<form class="container">
     <label for="title">
         <h5>Title</h5>
     </label>
     <input style="font-size: larger;" class="twelve columns u-full-width" type="text" name="title" id="title"
     placeholder="Title goes here..."
-    required
+    
     >
+    <span class="error hide">Error!</span>
     <div class="tabs">
         <div>Write</div>
-        <div>Preview</div>
+        <div class="active">Preview</div>
         <div>M&#8681; Guide</div>
     </div>
     <div class="tab-content">
@@ -29,12 +30,13 @@
             style="height: 30vh !important; resize: vertical;"
             class="twelve columns u-full-width"
             placeholder="Blog post goes here..."
-            required
+            
             ></textarea>
         </div>
         
-        <div class="preview hide">
-            <div></div>
+        <div class="preview">
+            <div style="font-size: xx-large;font-weight: 500;"></div>
+            <hr>
             <div></div>
         </div>
 
@@ -90,7 +92,7 @@ https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js
     // preview markdown
 const preview_el = {
     title:document.querySelector('.preview > div:nth-child(1)'),
-    post:document.querySelector('.preview > div:nth-child(2)')
+    post:document.querySelector('.preview > div:nth-child(3)')
 }
 const form_el = {
     title: document.querySelector('#title'),
@@ -100,8 +102,7 @@ const form_el = {
 form_el.post.addEventListener('input',update_post)
 form_el.title.addEventListener('input',update_title)
 function update_title(e){
-    const title = "### "+ form_el.title.value.trim()+"\n---"
-    preview_el.title.innerHTML = md.render(title.trim())
+    preview_el.title.innerHTML = form_el.title.value.trim()
 }
 function update_post(e){
     const post = e.target.value.trim()
