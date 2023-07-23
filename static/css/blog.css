@@ -39,7 +39,7 @@ hr {
 }
 .blog-info {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 15px;
 }
 .blog-info .author {
