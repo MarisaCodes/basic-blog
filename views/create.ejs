@@ -52,9 +52,6 @@ https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js
 "></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 <script>
-    if(!localStorage.getItem("user")){
-        location.replace("/")
-    }
     const md = window.markdownit({
   html:         false,        // Enable HTML tags in source
   xhtmlOut:     false,        // Use '/' to close single tags (<br />).

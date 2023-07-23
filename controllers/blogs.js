@@ -11,7 +11,7 @@ const get_create = (req, res) => {
         console.log(err);
         return;
       }
-      res.render("create", { md_guide: data });
+      res.render("create", { md_guide: data, user: req.user });
       return;
     }
   );

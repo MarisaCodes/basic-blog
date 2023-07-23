@@ -1,16 +1,17 @@
 const crypto = require("crypto");
 const sql = require("../models/db");
-const jwt = require("jsonwebtoken");
+const gen_auth_token = require("../funcs/gen_auth_token");
 require("dotenv").config();
 
 // get signup page controller
 const get_sign_up = (req, res) => {
-  res.render("signup", { error: null, user: req.user });
+  if (req.user === null) {
+    res.render("signup", { error: null, user: req.user });
+  } else {
+    res.redirect("/");
+  }
 };
 
-const gen_auth_token = (user_name) => {
-  return jwt.sign({ user_name }, process.env.TOKEN_SECRET, { expiresIn: 60 });
-};
 const is_username_unique = (user_name) => {
   // This function generates an auth token only given
   // UNIQUE username of users signing up
@@ -51,8 +52,13 @@ const post_sign_up = (req, res) => {
         `;
         })
         .then((rep) => {
-          const token = gen_auth_token(rep[0].user_name);
-          res.cookie("token", token, { httpOnly: true });
+          const token = gen_auth_token(rep[0].user_name, "access");
+          const refresh_token = gen_auth_token(rep[0].user_name, "refresh");
+          res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
+          res.cookie("refresh_token", refresh_token, {
+            httpOnly: true,
+            sameSite: "strict",
+          });
           res.render("index", {
             error: null,
             user: { user_name: rep[0].user_name },
@@ -71,8 +77,11 @@ const post_sign_up = (req, res) => {
 };
 //login controller get
 const get_login = (req, res) => {
-  res.render("login", { error: false, user: req.user });
-  return;
+  if (req.user === null) {
+    res.render("login", { error: null, user: req.user });
+  } else {
+    res.redirect("/");
+  }
 };
 // login controller post
 const post_login = (req, res) => {
@@ -85,17 +94,24 @@ const post_login = (req, res) => {
   `
     .then((rep) => {
       if (rep.length) {
-        const token = gen_auth_token(rep[0].user_name);
-        res.cookie("token", token);
-        res.render("index");
-        return;
+        const token = gen_auth_token(rep[0].user_name, "access");
+        const refresh_token = gen_auth_token(rep[0].user_name, "refresh");
+        res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
+        res.cookie("refresh_token", refresh_token, {
+          httpOnly: true,
+          sameSite: "strict",
+        });
+        res.redirect("/");
       } else {
-        res.render("login", { error: "😔 wrong username or password..." });
+        res.render("login", {
+          error: "😔 wrong username or password...",
+          user: req.user,
+        });
         return;
       }
     })
     .catch((err) => {
-      res.render("login", { error: err.message });
+      res.render("login", { error: err.message, user: req.user });
     });
 };
 

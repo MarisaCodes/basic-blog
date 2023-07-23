@@ -18,15 +18,18 @@ app.use(express.static("static"));
 app.use(cookieParser());
 
 // homepage
+app.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.clearCookie("refresh_token");
+  res.redirect("/");
+});
 app.get("/", auth_token, (req, res) => {
   res.render("index", { user: req.user });
   return;
 });
-
 // handling auth routes
 app.use("/", user_router);
 // handling blog logic routes (crud routes)
 app.use("/", blogs_router);
 
 app.listen(process.env.PORT);
-
