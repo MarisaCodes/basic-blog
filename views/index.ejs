@@ -9,7 +9,7 @@
       <%if (!data.length) {%>
       <div class="empty">Wow such empty</div>
       <%} else { data.map(blog=>{%>
-        <%-include("partials/blog.ejs", blog)%>
+        <%-include("partials/blog_card.ejs", blog)%>
         <%})}%>
     </div>
   </div>
@@ -62,7 +62,8 @@ https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js
         const time_el = blog.querySelector(".time")
         let md_content = md.render(content_el.innerHTML?.trim())
         content_el.innerHTML = md_content
-        time_el.innerHTML = new Date(time_el.innerHTML).toLocaleString()
+        let time = new Date(time_el.innerHTML)
+        time_el.innerHTML = time.toLocaleString()
       })
 </script>
     <%- include("partials/footer.ejs") %>

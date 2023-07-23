@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 const user_router = require("./routes/user_routes");
 const blogs_router = require("./routes/blog_routes");
 const cookieParser = require("cookie-parser");
@@ -14,7 +15,7 @@ app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ type: "application/json" }));
-app.use(express.static("static"));
+app.use(express.static(path.resolve(__dirname, "static")));
 app.use(cookieParser());
 
 // homepage

@@ -63,8 +63,20 @@ const post_blog = (req, res) => {
       res.status(501).send(err.message);
     });
 };
-
+const get_blog = (req, res) => {
+  const { id } = req.params;
+  sql`
+  select * from (blogs join users on
+  users.id = blogs.author_id)
+  where blogs.id = ${id}
+  
+  `.then((data) => {
+    console.log(data[0]);
+    res.render("blog", { blog: data[0], user: req.user });
+  });
+};
 module.exports = {
   get_create,
   post_blog,
+  get_blog,
 };
