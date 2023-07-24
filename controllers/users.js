@@ -59,17 +59,19 @@ const post_sign_up = (req, res) => {
             httpOnly: true,
             sameSite: "strict",
           });
-          res.redirect("/");
+          res.status(200).send("success");
         })
         .catch(() => {
-          res.render("signup", {
-            error: "Could not make transaction",
-            user: null,
-          });
+          res.status(500).json(
+            JSON.stringify({
+              error: "Could not make transaction",
+              user: null,
+            })
+          );
         });
     })
     .catch((err) => {
-      res.render("signup", { error: err, user: null });
+      res.status(406).json(JSON.stringify({ error: err, user: null }));
     });
 };
 //login controller get
@@ -86,7 +88,7 @@ const post_login = (req, res) => {
   const hash = crypto.createHash("sha256");
   const pswd_hash = hash.update(pswd).digest("hex");
   sql`
-  select user_name, password_hash, id from users where user_name = ${username}
+  select user_name, password_hash from users where user_name = ${username}
   and password_hash = ${pswd_hash}
   `
     .then((rep) => {
@@ -98,17 +100,15 @@ const post_login = (req, res) => {
           httpOnly: true,
           sameSite: "strict",
         });
-        res.redirect("/");
+        res.status(200).send("success");
       } else {
-        res.render("login", {
-          error: "😔 wrong username or password...",
-          user: req.user,
-        });
-        return;
+        throw new Error("😔 wrong username or password...");
       }
     })
     .catch((err) => {
-      res.render("login", { error: err.message, user: req.user });
+      res
+        .status(400)
+        .json(JSON.stringify({ error: err.message, user: req.user }));
     });
 };
 

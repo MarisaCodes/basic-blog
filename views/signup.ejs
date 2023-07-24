@@ -6,26 +6,26 @@
       <form class="signup-form-wrapper" action="/signup" method="post">
         <div class="row">
           <div class="twelve columns">
-            <label <% if (error) {  %>
-              class="error-text" <% } else { %> class="" <% }%> for="username"
+            <label   class=""  for="username"
               >Username
-              <% if(error) {%>
-              <span class="error-text">*<%= error %></span>
-              <%}%>
+                  <span class="error-text">
+
+                  </span>
               </label
             >
             <input 
-            <% if (error) { %>
-            class="u-full-width error" <%} else {%> class="u-full-width" <%}%>
+            
+             class="u-full-width" 
             type="text" name="username" id="username" required />
           </div>
           <label 
-          <% if (error) {  %>
-            class="error-text" <% } else { %> class="" <% }%>
-          for="pswd">Password</label>
+          class="" 
+          for="pswd">Password
+          <span class="error-text">
+          </span>
+        </label>
           <input
-          <% if (error) { %>
-            class="u-full-width error" <%} else {%> class="u-full-width" <%}%>
+            class="u-full-width" 
             type="password"
             name="pswd"
             id="pswd"
@@ -46,6 +46,61 @@
       </form>
     </div>
     <script>
+      const form = document.forms[0]
+      const el = {
+        label_username:document.querySelector("label[for='username']"),
+        label_pswd:document.querySelector("label[for='pswd']"),
+        submit_button:form.querySelector("input[type='submit']")
+      }
+      form.addEventListener("submit", (e)=>{
+        e.preventDefault()
+        const data = {
+          username:form.username.value,
+          pswd:form.pswd.value
+        }
+        if (data.pswd.length < 5) {
+          el.label_pswd.querySelector("span").innerHTML = "too short (*password is minimum 5 characters)"
+          return
+        }
+        el.label_pswd.querySelector("span").innerHTML = ""
+        el.label_username.querySelector("span").innerHTML = ""
+        el.submit_button.disabled = true
+        el.submit_button.classList.remove("button-primary")
+        fetch("/signup",{
+          method:"post",
+          headers:{
+            "Content-Type":"application/json"
+          }, 
+          body:JSON.stringify(data)
+        })
+        .then(res=>{
+          if (res.ok) {
+            window.location.replace("/")
+          } 
+          else if(res.status===406) {
+            res.json()
+            .then(rep=>{
+               const res = JSON.parse(rep)
+               throw new Error(res.error)
+              })
+              .catch((err)=>{
+                console.log(err.message)
+                el.label_username.querySelector("span").innerHTML = err.message
+                el.submit_button.disabled = false
+                el.submit_button.classList.add("button-primary")
+                return
+              })
+          } else {
+            throw new Error(res.status+" "+res.statusText)
+          }
+        }).catch((err)=>{
+          console.log(err.message)
+          el.label_username.querySelector("span").innerHTML = err.message
+          el.submit_button.disabled = true
+          el.submit_button.classList.remove("button-primary")
+          return
+        })
+      })
     </script>
     <%- include("partials/footer.ejs") %>
 
