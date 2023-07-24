@@ -25,6 +25,7 @@ h3 {
   width: fit-content !important;
   hyphens: auto !important;
   word-wrap: break-word;
+  word-break: break-all;
 }
 h3,
 hr {
