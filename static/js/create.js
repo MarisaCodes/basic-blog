@@ -54,6 +54,9 @@ form.addEventListener("submit", (e) => {
     error.innerHTML = `Consider adding content to your post (switch to writing tab on the left) before clicking submit 😒`;
     return;
   }
+  e.target.submit.disabled = true;
+  e.target.submit.classList.remove("button-primary");
+  e.target.querySelector(".loading").classList.remove("hide");
   const data = { title, content };
   fetch("/create", {
     method: "POST",
@@ -68,6 +71,10 @@ form.addEventListener("submit", (e) => {
       }
     })
     .catch((err) => {
+      e.target.submit.disabled = false;
+      e.target.submit.classList.add("button-primary");
+      e.target.querySelector(".loading").classList.add("hide");
+      //window.location.reload();
       console.log(err);
     });
 });

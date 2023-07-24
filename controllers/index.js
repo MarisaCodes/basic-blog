@@ -12,10 +12,11 @@ const get_index = (req, res) => {
    `
     .then((data) => {
       console.log(data);
-      res.render("index", { user: req.user, data });
+      res.render("index", { user: req.user, data,error:null });
     })
     .catch((err) => {
-      res.render("index", { user: req.user, data: `${err.message}` });
+      console.log("error triggered", err.message);
+      res.render("index", { user: req.user, data: null, error: err.message });
     });
 };
 

@@ -6,7 +6,7 @@
   <body>
     <%- include("partials/navbar.ejs", {user}) %>
     <div class="blog-wrapper">
-      <%if (!data.length) {%>
+      <%if (data===null || !data?.length) {%>
       <div class="empty">Wow such empty</div>
       <%} else { data.map(blog=>{%>
         <%-include("partials/blog_card.ejs", blog)%>

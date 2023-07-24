@@ -31,4 +31,9 @@ app.use("/", user_router);
 // handling blog logic routes (crud routes)
 app.use("/", blogs_router);
 
+// 404
+app.use((req, res) => {
+  res.status(404).render("404", { title: 404, user: req.user });
+});
+
 app.listen(process.env.PORT);
