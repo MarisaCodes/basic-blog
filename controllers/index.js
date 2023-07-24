@@ -11,7 +11,6 @@ const get_index = (req, res) => {
    ORDER BY created_at DESC
    `
     .then((data) => {
-      console.log(data);
       res.render("index", { user: req.user, data,error:null });
     })
     .catch((err) => {

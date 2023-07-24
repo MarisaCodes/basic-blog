@@ -71,7 +71,6 @@ const get_blog = (req, res) => {
   where blogs.id = ${id}
   
   `.then((data) => {
-    console.log(data[0]);
     res.render("blog", { blog: data[0], user: req.user });
   });
 };
