@@ -9,7 +9,7 @@ nav {
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.07);
-  padding-right: 5px;
+  padding: 10px !important;
 }
 nav > div:nth-child(1) {
   padding-bottom: 10px;
@@ -113,7 +113,7 @@ nav > .secondary-btn {
 }
 .burger {
   position: fixed;
-  top: 25px;
+  top: 19px;
   right: 10px;
   z-index: 5;
   width: fit-content;

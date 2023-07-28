@@ -18,8 +18,7 @@ for (let i = 0; i < tabs.length; i++) {
     tab_content[i].classList.remove("hide");
   });
 }
-//const regex = /(?:\r\n|\r|\n)/g;
-// this code assums well structured HTML
+// the above code assums well structured HTML
 // nested within div.tab-content should be the corresponding
 // tabbed content to the tabs nested within div.tabs
 // in strict order so that their indexes match in the node lists
@@ -68,6 +67,8 @@ form.addEventListener("submit", (e) => {
     .then((res) => {
       if (res.ok) {
         window.location.replace("/");
+      } else {
+        throw new Error(res.statusText + " " + res.status);
       }
     })
     .catch((err) => {

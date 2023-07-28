@@ -1,6 +1,24 @@
 const sql = require("../models/db");
 const fs = require("fs");
 const path = require("path");
+const hljs = require("highlight.js");
+const md = require("markdown-it")({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return (
+          '<pre class="hljs"><code>' +
+          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+          "</code></pre>"
+        );
+      } catch (__) {}
+    }
+
+    return (
+      '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + "</code></pre>"
+    );
+  },
+});
 
 // get create page
 const get_create = (req, res) => {
@@ -27,7 +45,7 @@ const post_blog = (req, res) => {
     res.redirect("/");
   }
   const username = req.user.user_name;
-  const { title, content } = req.body;
+  let { title, content } = req.body;
 
   sql
     .begin(async (sql) => {
@@ -36,6 +54,7 @@ const post_blog = (req, res) => {
     `
         .then(async (rep) => {
           const author_id = rep[0].id;
+          content = md.render(content);
           const blog = [
             {
               author_id,
