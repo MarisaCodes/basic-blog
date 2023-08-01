@@ -112,9 +112,36 @@ const post_login = (req, res) => {
     });
 };
 
+// get user blog posts
+
+const get_user_posts = (req, res, next) => {
+  if (req.user === null) {
+    res.status(403).render("403", { title: "403", user: req.user });
+  }
+  sql`select * from blogs where blogs.author_id = (select id from users where users.user_name = ${req.user.user_name})`
+    .then((data) => {
+      res.render("your_posts", {
+        title: "Your posts",
+        user: req.user,
+        data,
+        edit: true,
+      });
+    })
+    .catch((err) => {
+      res.render("your_posts", {
+        title: "Your posts",
+        user: req.user,
+        data: null,
+        error: err.message,
+        edit: null
+      });
+    });
+};
+
 module.exports = {
   get_sign_up,
   post_sign_up,
   post_login,
   get_login,
+  get_user_posts,
 };

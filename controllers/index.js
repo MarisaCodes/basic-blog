@@ -11,11 +11,16 @@ const get_index = (req, res) => {
    ORDER BY created_at DESC
    `
     .then((data) => {
-      res.render("index", { user: req.user, data, error: null });
+      res.render("index", { user: req.user, data, error: null, edit: false });
     })
     .catch((err) => {
       console.log("error triggered", err.message);
-      res.render("index", { user: req.user, data: null, error: err.message });
+      res.render("index", {
+        user: req.user,
+        data: null,
+        error: err.message,
+        edit: null,
+      });
     });
 };
 

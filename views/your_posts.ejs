@@ -1,0 +1,13 @@
+<%-include("partials/head.ejs", {css_links:["/css/blog_card.css", "/css/index.css"]})%>
+<body>
+    <%-include("partials/navbar.ejs")%>
+    <div class="blog-wrapper">
+        <%if (data===null || !data?.length) {%>
+        <div class="empty">Wow such empty</div>
+        <%} else { data.map(blog=>{ blog.user_name = user.user_name%>
+          <%-include("partials/blog_card.ejs", blog)%>
+          <%})}%>
+      </div>
+</div>
+    <%-include("partials/footer.ejs")%>
+</body>

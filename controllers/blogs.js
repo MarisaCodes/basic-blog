@@ -82,17 +82,28 @@ const post_blog = (req, res) => {
       res.status(501).send(err.message);
     });
 };
-const get_blog = (req, res) => {
+const get_blog = (req, res, next) => {
   const { id } = req.params;
   sql`
   select * from (blogs join users on
   users.id = blogs.author_id)
   where blogs.id = ${id}
   
-  `.then((data) => {
-    res.render("blog", { blog: data[0], user: req.user });
-  });
+  `
+    .then((data) => {
+      if (data.length) {
+        res.render("blog", { blog: data[0], user: req.user });
+      } else {
+        throw Error("not found");
+      }
+    })
+    .catch((err) => {
+      res.status(404);
+      next();
+    });
 };
+
+
 module.exports = {
   get_create,
   post_blog,

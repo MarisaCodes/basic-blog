@@ -7,6 +7,7 @@ const {
   post_sign_up,
   post_login,
   get_login,
+  get_user_posts,
 } = require("../controllers/users");
 const user_router = express.Router();
 // middleware
@@ -19,5 +20,6 @@ user_router.post("/signup", post_sign_up);
 // login
 user_router.get("/login", auth_token, get_login);
 user_router.post("/login", post_login);
-
+// get user blog
+user_router.get("/user/blogs", auth_token, get_user_posts);
 module.exports = user_router;

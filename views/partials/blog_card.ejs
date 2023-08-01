@@ -10,5 +10,8 @@
   <div class="content-wrapper">
     <div class="content"><%-content%></div>
   </div>
-  <a class="u-full-width read-more" href="/blog/<%=blog_id%>"> Read More... </a>
+  <a class="u-full-width read-more" href=<%=`${edit?"/edit/"+id:"/blog/"+blog_id}`%>
+    > 
+    <%=`${edit?"Edit":"Read More..."}`%>   
+  </a>
 </div>
