@@ -23,7 +23,7 @@
           <a class="primary-btn" href="/signup">Sign Up</a>
           <%} else {%>
           <!-- user logged in: -->
-          <a class="secondary-btn" href="#"><%=user.user_name%></a>
+          <a class="secondary-btn" href="/profile"><%=user.user_name%></a>
           <a class="secondary-btn" href="/create">Create Blogs</a>
           <a class="secondary-btn" href="/user/blogs">Your Blogs</a>
           <a href="/logout" class="secondary-btn">logout</a>
@@ -47,7 +47,7 @@
         <%=user.user_name%>
       </div>
       <div class="dropdown-content">
-        <a href="#">Profile</a>
+        <a href="/profile">Profile</a>
         <hr />
         <a href="/create">Create Blogs</a>
         <hr />

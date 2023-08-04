@@ -1,0 +1,53 @@
+<%- include("partials/head.ejs", {title:`${user.user_name}`,css_links:[
+"/css/profile.css","https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
+]}) %>
+<%-include("partials/navbar.ejs")%>
+<body>
+    <div class="wrapper">
+        <div class="user_data">
+            <h1>~<%=user.user_name%></h1>
+                <form>
+                    <label for="profile_pic" class="profile_pic">
+                        <span>Change</span>
+                        <img src="<%=profile_pic%>" alt="">
+                    </label>
+                    <input type="file" name="profile_pic" id="profile_pic">
+                </form>
+        </div>
+        <div class="about">
+            <h4>About</h4>
+            <h5><%=about%></h5> 
+            <form action="/profile/about" method="post">
+                <label for="about">Edit:</label>
+                <input type="text" class="u-full-width" name="about" id="about"
+                placeholder="Hmm, consider writing something!"
+                value = "<%=about%>"
+                >
+                <input type="submit" value="submit" class="button-primary">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const change_pfp = document.forms[0]
+    change_pfp.profile_pic.addEventListener("change", (e)=>{
+        const formData = new FormData()
+        formData.append("profile_pic", change_pfp.profile_pic.files[0])
+        fetch("/profile/pfp",{
+            method:"post",
+            body:formData
+        })
+        .then(res=>{
+            if (res.ok)
+                window.location.replace("/profile")
+            else
+                throw new Error("could not update")
+        }).catch(err=>{
+            console.log(err)
+        })
+    })
+</script>
+</body>
+
+
+<%- include('partials/footer.ejs') %>

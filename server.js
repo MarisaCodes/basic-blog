@@ -6,6 +6,7 @@ const blogs_router = require("./routes/blog_routes");
 const cookieParser = require("cookie-parser");
 const index_router = require("./routes/index_routes");
 const edit_router = require("./routes/edit_routes");
+const profile_route = require("./routes/profile_route");
 const auth_token = require("./funcs/auth");
 
 require("dotenv").config();
@@ -35,6 +36,8 @@ app.use("/", user_router);
 app.use("/", blogs_router);
 // handling edit routes
 app.use("/", edit_router);
+// profile route
+app.use("/", profile_route);
 // 404
 app.use(auth_token, (req, res) => {
   res.status(404).render("404", { title: 404, user: req.user });
