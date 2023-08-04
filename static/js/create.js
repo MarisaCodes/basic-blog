@@ -15,7 +15,7 @@ form.addEventListener("submit", (e) => {
     return;
   } else if (content.split(" ").join("").length > POST_LIMIT) {
     error.classList.remove("hide");
-    error.innerHTML = `Your title is too long, limit is ${TITLE_LIMIT}. You have ${
+    error.innerHTML = `Your post is too long, limit is ${POST_LIMIT}. You have ${
       content.split(" ").join("").length - POST_LIMIT
     } extra characters.`;
     return;
