@@ -11,8 +11,14 @@
                 <span class="author">
                     By <%=blog.user_name%>
                 </span>
+                <img src="<%=blog.profile_pic%>" alt="">
             </div>
         </div>
+        <%if (blog.about){%>
+        <div class="about">
+            <%=blog.about%>
+        </div>
+        <%}%>
         <hr />
         <div class="content-wrapper">
             <div class="content"><%-blog.content%></div>

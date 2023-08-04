@@ -40,6 +40,7 @@ hr {
 }
 .blog-info {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 15px;
 }
@@ -50,6 +51,12 @@ hr {
   width: fit-content;
   color: white;
   border-radius: 5px;
+}
+.blog-info img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 code {
   font-size: medium !important;
@@ -70,7 +77,15 @@ code {
   aspect-ratio: 4/3;
   object-fit: scale-down;
 }
-
+.about {
+  color: #555;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  word-break: break-word;
+  hyphens: auto;
+}
 @media (min-width: 550px) {
   form {
     width: 80%;

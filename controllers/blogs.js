@@ -92,6 +92,7 @@ const get_blog = (req, res, next) => {
   `
     .then((data) => {
       if (data.length) {
+        data[0].profile_pic = req.user.profile_pic;
         res.render("blog", { blog: data[0], user: req.user });
       } else {
         throw Error("not found");
@@ -102,7 +103,6 @@ const get_blog = (req, res, next) => {
       next();
     });
 };
-
 
 module.exports = {
   get_create,

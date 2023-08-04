@@ -45,22 +45,45 @@ profile_route.post(
       .then((rep) => {
         if (rep.length) {
           const profile_pic = rep[0].profile_pic;
-          fs.rm(
-            path.join(path.resolve(process.cwd(), "static"), profile_pic),
-            (err) => {
-              if (!err) {
-                fs.writeFileSync(
-                  path.join(
-                    path.resolve(process.cwd(), "static"),
-                    `/user_imgs/${req.user.user_name}.${mime.extension(req.file.mimetype)}`
-                  ),
-                  req.file.buffer,
-                  { encoding: "base64" }
-                );
+          if (profile_pic) {
+            fs.rmSync(
+              path.join(path.resolve(process.cwd(), "static"), profile_pic)
+            );
+            fs.writeFileSync(
+              path.join(
+                path.resolve(process.cwd(), "static"),
+                `/user_imgs/${req.user.user_name}.${mime.extension(
+                  req.file.mimetype
+                )}`
+              ),
+              req.file.buffer,
+              { encoding: "base64" }
+            );
+            res.status(200).send("success");
+          } else {
+            fs.writeFileSync(
+              path.join(
+                path.resolve(process.cwd(), "static"),
+                `/user_imgs/${req.user.user_name}.${mime.extension(
+                  req.file.mimetype
+                )}`
+              ),
+              req.file.buffer,
+              { encoding: "base64" }
+            );
+            sql
+              .begin(async (sql) => {
+                return await sql`update users set profile_pic = ${path.join(
+                  "/user_imgs/",
+                  req.user.user_name + "." + mime.extension(req.file.mimetype)
+                )}
+                where user_name = ${req.user.user_name}
+                `;
+              })
+              .then(() => {
                 res.status(200).send("success");
-              } else console.log(err);
-            }
-          );
+              });
+          }
         }
       })
       .catch((err) => console.log(err));

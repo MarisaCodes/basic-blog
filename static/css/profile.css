@@ -65,6 +65,10 @@
   color: white;
   border-radius: 10px;
 }
+.about h5 {
+  word-break: break-word;
+  hyphens: auto;
+}
 .about span {
   padding: 5px;
   font-size: large;
