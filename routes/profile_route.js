@@ -43,46 +43,32 @@ profile_route.post(
   (req, res) => {
     sql`select profile_pic from users where user_name = ${req.user.user_name}`
       .then((rep) => {
-        if (rep.length) {
-          const profile_pic = rep[0].profile_pic;
-          if (profile_pic) {
-            fs.rmSync(path.join("./static", profile_pic));
-            fs.writeFileSync(
-              path.join(
-                "./static",
-                `/user_imgs/${req.user.user_name}.${mime.extension(
-                  req.file.mimetype
-                )}`
-              ),
-              req.file.buffer,
-              { encoding: "base64" }
-            );
+        const profile_pic = rep[0].profile_pic;
+        profile_pic.includes("default")
+          ? null
+          : fs.rmSync(path.join("./static", profile_pic));
+        fs.writeFileSync(
+          path.join(
+            "./static",
+            `/user_imgs/${req.user.user_name}.${mime.extension(
+              req.file.mimetype
+            )}`
+          ),
+          req.file.buffer,
+          { encoding: "base64" }
+        );
+        sql
+          .begin(async (sql) => {
+            return await sql`update users set profile_pic = ${path.join(
+              "/user_imgs/",
+              req.user.user_name + "." + mime.extension(req.file.mimetype)
+            )}
+              where user_name = ${req.user.user_name}
+              `;
+          })
+          .then(() => {
             res.status(200).send("success");
-          } else {
-            fs.writeFileSync(
-              path.join(
-                "./static",
-                `/user_imgs/${req.user.user_name}.${mime.extension(
-                  req.file.mimetype
-                )}`
-              ),
-              req.file.buffer,
-              { encoding: "base64" }
-            );
-            sql
-              .begin(async (sql) => {
-                return await sql`update users set profile_pic = ${path.join(
-                  "/user_imgs/",
-                  req.user.user_name + "." + mime.extension(req.file.mimetype)
-                )}
-                where user_name = ${req.user.user_name}
-                `;
-              })
-              .then(() => {
-                res.status(200).send("success");
-              });
-          }
-        }
+          });
       })
       .catch((err) => console.log(err));
   }
