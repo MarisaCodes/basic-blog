@@ -46,12 +46,10 @@ profile_route.post(
         if (rep.length) {
           const profile_pic = rep[0].profile_pic;
           if (profile_pic) {
-            fs.rmSync(
-              path.join(path.resolve(process.cwd(), "static"), profile_pic)
-            );
+            fs.rmSync(path.join("./static", profile_pic));
             fs.writeFileSync(
               path.join(
-                path.resolve(process.cwd(), "static"),
+                "./static",
                 `/user_imgs/${req.user.user_name}.${mime.extension(
                   req.file.mimetype
                 )}`
@@ -63,7 +61,7 @@ profile_route.post(
           } else {
             fs.writeFileSync(
               path.join(
-                path.resolve(process.cwd(), "static"),
+                "./static",
                 `/user_imgs/${req.user.user_name}.${mime.extension(
                   req.file.mimetype
                 )}`

@@ -39,7 +39,7 @@ const upload_pfp = async (filename, file) => {
   return new Promise((resolve, reject) => {
     fs.writeFile(
       path.join(
-        path.resolve(process.cwd(), "static"),
+        "./static",
         `user_imgs/${filename + "." + mime.extension(file.mimetype)}`
       ),
       file.buffer,

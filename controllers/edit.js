@@ -34,7 +34,7 @@ const get_edit = (req, res, next) => {
       return;
     }
     fs.readFile(
-      path.resolve(process.cwd(), "private/md_guide.md"),
+      "./private/md_guide.md",
       (err, data) => {
         if (err) {
           res.render("edit", {

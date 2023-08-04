@@ -27,7 +27,7 @@ const get_create = (req, res) => {
     return;
   }
   fs.readFile(
-    path.resolve(process.cwd(), "private/md_guide.md"),
+    "./private/md_guide.md",
     "utf-8",
     (err, data) => {
       if (err) {
@@ -91,8 +91,8 @@ const get_blog = (req, res, next) => {
   
   `
     .then((data) => {
+      console.log(data);
       if (data.length) {
-        data[0].profile_pic = req.user.profile_pic;
         res.render("blog", { blog: data[0], user: req.user });
       } else {
         throw Error("not found");
