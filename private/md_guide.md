@@ -95,19 +95,19 @@ For a single line, one backtick on either side is enough.
 
 For example:
 
-![example of js console.log image](images/eg1.png)
+![example of js console.log image](/images/eg1.png)
 
 The syntax is:
-![example of js console.log markdown syntax image](images/eg1_synt.png)
+![example of js console.log markdown syntax image](/images/eg1_synt.png)
 
 To make entire code blocks with highlight support for a specific language see the following example:
 
 Example output of a hello world program in \`C\`:
 
-![example of C code markdown highlighted](images/eg2.png)
+![example of C code markdown highlighted](/images/eg2.png)
 
 The syntax for making this is:
 
-![example of js console.log markdown syntax image](images/eg2_synt.png)
+![example of js console.log markdown syntax image](/images/eg2_synt.png)
 
 If you have already noticed, instead of one backtick, you use three to wrap the block of code. After the **first three** backticks you specify the language by typing the file extension for that language right next to the last of the first three backticks, without any space between. Here, the language is \`C\`, see if you can spot that letter in the syntax!

@@ -1,8 +1,8 @@
 <%- include("partials/head.ejs",{title:"Create Blog",css_links:[
-    "css/create.css","css/normalize.css",
+    "/css/create.css","/css/normalize.css",
     "//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
 ]}) %>
-<%- include('partials/navbar.ejs', {user}) %>
+<%- include('partials/navbar.ejs') %>
 
 <form class="container">
     <label for="title">
@@ -113,5 +113,6 @@ const md_guide_=  document.querySelector('.md-guide')
 const md_guide_content = `<%= md_guide %>`
 md_guide_.innerHTML = md.render(md_guide_content)
 </script>
-<script src="js/create.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/create.js"></script>
 <%- include('partials/footer.ejs') %>

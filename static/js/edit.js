@@ -32,7 +32,8 @@ form.addEventListener("submit", (e) => {
   e.target.submit.classList.remove("button-primary");
   e.target.querySelector(".loading").classList.remove("hide");
   const data = { title, content };
-  fetch("/create", {
+  const url = new URL(window.location.href);
+  fetch(`${url.pathname}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +42,10 @@ form.addEventListener("submit", (e) => {
   })
     .then((res) => {
       if (res.ok) {
-        window.location.replace("/");
+        res.json().then((rep) => {
+          const response = JSON.parse(rep);
+          window.location.replace(`/blog/${response.id}`);
+        });
       } else {
         throw new Error(res.statusText + " " + res.status);
       }
@@ -50,7 +54,6 @@ form.addEventListener("submit", (e) => {
       e.target.submit.disabled = false;
       e.target.submit.classList.add("button-primary");
       e.target.querySelector(".loading").classList.add("hide");
-      //window.location.reload();
       console.log(err);
     });
 });
