@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "pgOptions": {
+        "ssl": true
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "basic-blog",
+      "connectString": "postgres://MarisaCodes:58VLaJIrtmAw@ep-shy-boat-70632459.us-east-2.aws.neon.tech/basic-blog"
+    }
+  ]
+}
