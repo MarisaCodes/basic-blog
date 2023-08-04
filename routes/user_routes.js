@@ -1,7 +1,9 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const auth_token = require("../funcs/auth");
-
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 const {
   get_sign_up,
   post_sign_up,
@@ -15,7 +17,7 @@ user_router.use(cookieParser());
 
 // signup
 user_router.get("/signup", auth_token, get_sign_up);
-user_router.post("/signup", post_sign_up);
+user_router.post("/signup", upload.single("profile_pic"), post_sign_up);
 
 // login
 user_router.get("/login", auth_token, get_login);

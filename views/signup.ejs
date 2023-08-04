@@ -3,10 +3,10 @@
 ]}) %>
   <body>
     <%- include("partials/navbar.ejs", {user}) %>
-      <form class="signup-form-wrapper" action="/signup" method="post">
+      <form class="signup-form-wrapper" action="/signup">
         <div class="row">
           <div class="twelve columns">
-            <label   class=""  for="username"
+            <label   class=""  for="user_name"
               >Username
                   <span class="error-text">
 
@@ -16,7 +16,7 @@
             <input 
             
              class="u-full-width" 
-            type="text" name="username" id="username" required />
+            type="text" name="user_name" id="user_name" required />
           </div>
           <label 
           class="" 
@@ -31,8 +31,8 @@
             id="pswd"
             required
           />
-          <input type="file" name="profile" id="profile" />
-          <label class="cstm-file twelve columns" for="profile"
+          <input type="file" name="profile_pic" id="profile_pic" accept="image/*"/>
+          <label class="cstm-file twelve columns" for="profile_pic"
             ><span>Profile Picture (optional)</span>
             <img src="images/file_upload.svg" width="40" height="40" alt="" />
           </label>
@@ -43,23 +43,34 @@
           />
 
         </div>
+        <div class="loading hide">Loading...</div>
+
       </form>
     </div>
     <script>
       const form = document.forms[0]
       const el = {
-        label_username:document.querySelector("label[for='username']"),
+        label_username:document.querySelector("label[for='user_name']"),
         label_pswd:document.querySelector("label[for='pswd']"),
-        submit_button:form.querySelector("input[type='submit']")
+        submit_button:form.querySelector("input[type='submit']"),
+        span_profile_pic:form.querySelector('label.cstm-file > span'),
+        loading:document.querySelector('.loading')
       }
+      form.profile_pic.addEventListener("change",(e)=>{
+        const inp_img = form.profile_pic.files[0]
+        el.span_profile_pic.innerHTML = inp_img.name
+      })
       form.addEventListener("submit", (e)=>{
         e.preventDefault()
-        const data = {
-          username:form.username.value,
-          pswd:form.pswd.value
-        }
-        if (data.pswd.length < 5) {
+        el.loading.classList.remove('hide')
+        const formData = new FormData()
+        formData.append("user_name",form.user_name.value)
+        formData.append("pswd",form.pswd.value)
+        form.profile_pic.files.length!==0?
+        formData.append("profile_pic", form.profile_pic.files[0]):null
+        if (form.pswd.value.length < 5) {
           el.label_pswd.querySelector("span").innerHTML = "too short (*password is minimum 5 characters)"
+          el.loading.classList.add('hide')
           return
         }
         el.label_pswd.querySelector("span").innerHTML = ""
@@ -68,10 +79,7 @@
         el.submit_button.classList.remove("button-primary")
         fetch("/signup",{
           method:"post",
-          headers:{
-            "Content-Type":"application/json"
-          }, 
-          body:JSON.stringify(data)
+          body:formData
         })
         .then(res=>{
           if (res.ok) {
@@ -88,6 +96,7 @@
                 el.label_username.querySelector("span").innerHTML = err.message
                 el.submit_button.disabled = false
                 el.submit_button.classList.add("button-primary")
+                el.loading.classList.add('hide')
                 return
               })
           } else {
@@ -96,8 +105,9 @@
         }).catch((err)=>{
           console.log(err.message)
           el.label_username.querySelector("span").innerHTML = err.message
-          el.submit_button.disabled = true
-          el.submit_button.classList.remove("button-primary")
+          el.submit_button.disabled = false
+          el.submit_button.classList.add("button-primary")
+          el.loading.classList.add('hide')
           return
         })
       })

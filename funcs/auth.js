@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const sql = require("../models/db");
 require("dotenv").config();
 // middleware to run in a get request to authenticate
 function auth_token(req, res, next) {
@@ -15,7 +16,11 @@ function auth_token(req, res, next) {
             if (error) {
               res.clearCookie("token");
               res.clearCookie("refresh_token");
-              req.user = null;
+              req.user = {
+                user_name: null,
+                profile_pic: null,
+              };
+              next();
             } else {
               const username = decoded.user_name;
               const token = jwt.sign(
@@ -27,17 +32,40 @@ function auth_token(req, res, next) {
                 httpOnly: true,
                 sameSite: "strict",
               });
-              req.user = decoded;
+              sql`select profile_pic from users where user_name = ${username}`.then(
+                (rep) => {
+                  req.user = {
+                    user_name: decoded.user_name,
+                    profile_pic: rep[0].profile_pic
+                      ? rep[0].profile_pic
+                      : "/images/default_pfp.svg",
+                  };
+                  next();
+                }
+              );
             }
           }
         );
       } else {
-        req.user = decoded;
+        sql`select profile_pic from users where user_name = ${decoded.user_name}`.then(
+          (rep) => {
+            req.user = {
+              user_name: decoded.user_name,
+              profile_pic: rep[0].profile_pic
+                ? rep[0].profile_pic
+                : "/images/default_pfp.svg",
+            };
+            next();
+          }
+        );
       }
     });
   } else {
-    req.user = null;
+    req.user = {
+      user_name: null,
+      profile_pic: null,
+    };
+    next();
   }
-  next();
 }
 module.exports = auth_token;

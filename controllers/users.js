@@ -1,11 +1,14 @@
 const crypto = require("crypto");
 const sql = require("../models/db");
 const gen_auth_token = require("../funcs/gen_auth_token");
+const fs = require("fs");
+const path = require("path");
+const mime = require("mime-types");
 require("dotenv").config();
 
 // get signup page controller
 const get_sign_up = (req, res) => {
-  if (req.user === null) {
+  if (req.user.user_name === null) {
     res.render("signup", { error: null, user: req.user });
   } else {
     res.redirect("/");
@@ -31,25 +34,59 @@ const is_username_unique = (user_name) => {
       });
   });
 };
+// upload profile picture
+const upload_pfp = async (filename, file) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(
+      path.join(
+        path.resolve(process.cwd(), "static"),
+        `user_imgs/${filename + "." + mime.extension(file.mimetype)}`
+      ),
+      file.buffer,
+      { encoding: "base64" },
+      async (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(
+            `/user_imgs/${filename + "." + mime.extension(file.mimetype)}`
+          );
+        }
+      }
+    );
+  });
+};
 // post signup info controller
 const post_sign_up = (req, res) => {
-  const { username, pswd } = req.body;
-  is_username_unique(username)
+  const { user_name, pswd } = req.body;
+  is_username_unique(user_name)
     .then((user_name) => {
       sql
         .begin(async (sql) => {
           const hash = crypto.createHash("sha256");
           const password_hash = hash.update(pswd).digest("hex");
-          const user = [
+          let profile_pic = null;
+          let user = [
             {
               user_name,
               password_hash,
             },
           ];
-          return await sql`
-        INSERT into users ${sql(user)}
-        RETURNING *
-        `;
+          return await upload_pfp(user_name, req.file)
+            .then(async (filepath) => {
+              user[0].profile_pic = filepath;
+              return await sql`
+            INSERT into users ${sql(user)}
+            RETURNING *
+            `;
+            })
+            .catch(async (err) => {
+              console.log(err);
+              return await sql`
+            INSERT into users ${sql(user)}
+            RETURNING *
+            `;
+            });
         })
         .then((rep) => {
           const token = gen_auth_token(rep[0].user_name, "access");
@@ -76,7 +113,7 @@ const post_sign_up = (req, res) => {
 };
 //login controller get
 const get_login = (req, res) => {
-  if (req.user === null) {
+  if (req.user.user_name === null) {
     res.render("login", { error: null, user: req.user });
   } else {
     res.redirect("/");
@@ -115,7 +152,7 @@ const post_login = (req, res) => {
 // get user blog posts
 
 const get_user_posts = (req, res, next) => {
-  if (req.user === null) {
+  if (req.user.user_name === null) {
     res.status(403).render("403", { title: "403", user: req.user });
   }
   sql`select * from blogs where blogs.author_id = (select id from users where users.user_name = ${req.user.user_name})`
@@ -133,7 +170,7 @@ const get_user_posts = (req, res, next) => {
         user: req.user,
         data: null,
         error: err.message,
-        edit: null
+        edit: null,
       });
     });
 };

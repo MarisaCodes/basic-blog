@@ -22,7 +22,7 @@ const md = require("markdown-it")({
 
 // get create page
 const get_create = (req, res) => {
-  if (req.user === null) {
+  if (req.user.user_name === null) {
     res.redirect("/");
     return;
   }

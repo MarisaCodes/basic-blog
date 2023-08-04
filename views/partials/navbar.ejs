@@ -18,7 +18,7 @@
         <div class="nav-list">
           <!--user not logged in-->
           <a class="secondary-btn" href="/">Home</a>
-          <% if (!user) {%>
+          <% if (!user.user_name) {%>
           <a class="secondary-btn" href="/login">Login</a>
           <a class="primary-btn" href="/signup">Sign Up</a>
           <%} else {%>
@@ -33,18 +33,19 @@
     </div>
     <div class="four nav-item columns nav-gap"></div>
 
-    <% if (!user) { %>
-     
-    <a href="/login" class="two columns nav-item login secondary-btn"
-      >Login</a
-    >
+    <% if (!user.user_name) { %>
+
+    <a href="/login" class="two columns nav-item login secondary-btn">Login</a>
     <a href="/signup" class="two columns nav-item signup primary-btn">
       Sign Up
     </a>
     <% } else { %>
 
     <div class="nav-item profile-wrapper two columns dropdown">
-      <span class="profile"><%=user.user_name%></span>
+      <div class="profile">
+        <img src="<%=user.profile_pic%>" alt="profile picture" />
+        <%=user.user_name%>
+      </div>
       <div class="dropdown-content">
         <a href="#">Profile</a>
         <hr />
@@ -53,9 +54,7 @@
         <a href="/user/blogs">Your blogs</a>
       </div>
     </div>
-    <a
-      href="/logout"
-      class="two columns logout nav-item secondary-btn"
+    <a href="/logout" class="two columns logout nav-item secondary-btn"
       >Logout</a
     >
     <%}%>

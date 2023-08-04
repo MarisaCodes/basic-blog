@@ -42,8 +42,20 @@ nav > div:nth-child(1) {
   text-align: center;
 }
 .profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   font-size: 19px;
   cursor: pointer;
+  padding-right: 20px;
+}
+.profile img {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  -webkit-user-drag: none;
+  border-radius: 50%;
 }
 .dropdown {
   position: relative;
@@ -76,7 +88,12 @@ nav > .secondary-btn {
 }
 .primary-btn,
 .secondary-btn {
+  margin-top: 25px !important;
   text-decoration: none;
+}
+.drawer .primary-btn,
+.drawer .secondary-btn {
+  margin-top: 0px !important;
 }
 .primary-btn {
   color: white;

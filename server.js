@@ -16,7 +16,7 @@ app.set("view engine", "ejs");
 
 app.use(morgan("dev")); // for dev only
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({ type: "application/json" }));
+app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "static")));
 app.use(cookieParser());
 
