@@ -46,11 +46,11 @@ profile_route.post(
         const profile_pic = rep[0].profile_pic;
         profile_pic.includes("default")
           ? null
-          : fs.rmSync(path.join("./static", profile_pic));
+          : fs.rmSync(path.join("static", profile_pic));
         fs.writeFileSync(
-          path.join(
-            "./static",
-            `/user_imgs/${req.user.user_name}.${mime.extension(
+          path.resolve(
+            __dirname,
+            `../static/user_imgs/${req.user.user_name}.${mime.extension(
               req.file.mimetype
             )}`
           ),
@@ -59,10 +59,9 @@ profile_route.post(
         );
         sql
           .begin(async (sql) => {
-            return await sql`update users set profile_pic = ${path.join(
-              "/user_imgs/",
-              req.user.user_name + "." + mime.extension(req.file.mimetype)
-            )}
+            return await sql`update users set profile_pic = ${`/user_imgs/${
+              req.user.user_name
+            }.${mime.extension(req.file.mimetype)}`}
               where user_name = ${req.user.user_name}
               `;
           })

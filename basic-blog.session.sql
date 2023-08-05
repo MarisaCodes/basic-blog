@@ -19,3 +19,5 @@ CREATE TABLE IF NOT EXISTS blogs(
         FOREIGN KEY(author_id)
             REFERENCES users(id)
 );
+
+TRUNCATE users, blogs RESTART IDENTITY;
