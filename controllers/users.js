@@ -38,9 +38,9 @@ const is_username_unique = (user_name) => {
 const upload_pfp = async (filename, file) => {
   return new Promise((resolve, reject) => {
     fs.writeFile(
-      path.join(
-        "./static",
-        `user_imgs/${filename + "." + mime.extension(file.mimetype)}`
+      path.resolve(
+        __dirname,
+        `../static/user_imgs/${filename + "." + mime.extension(file.mimetype)}`
       ),
       file.buffer,
       { encoding: "base64" },
