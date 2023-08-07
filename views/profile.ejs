@@ -53,6 +53,7 @@
                 throw new Error("could not update")
         }).catch(err=>{
             change_pfp.querySelector('.loading').classList.add('hide')
+            change_pfp.profile_pic.setAttribute("disabled", false)
             console.log(err)
         })
     })
