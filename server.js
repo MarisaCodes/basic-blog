@@ -8,6 +8,7 @@ const index_router = require("./routes/index_routes");
 const edit_router = require("./routes/edit_routes");
 const profile_route = require("./routes/profile_route");
 const auth_token = require("./funcs/auth");
+const { profile_base64 } = require("./funcs/profile_base64");
 
 require("dotenv").config();
 
@@ -39,7 +40,7 @@ app.use("/", edit_router);
 // profile route
 app.use("/", profile_route);
 // 404
-app.use(auth_token, (req, res) => {
+app.use(auth_token, profile_base64, (req, res) => {
   res.status(404).render("404", { title: 404, user: req.user });
 });
 

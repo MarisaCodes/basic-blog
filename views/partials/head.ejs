@@ -13,4 +13,9 @@
     <link rel="stylesheet" href="/css/footer.css" />
 
     <title><%= title %></title>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script>
+    <script>
+      const images = document.querySelectorAll('img')
+      lazyload(images)
+    </script>
   </head>

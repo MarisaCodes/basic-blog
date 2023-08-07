@@ -1,4 +1,4 @@
-<%- include("partials/head.ejs", {title:`Blog ${blog.title}`,css_links:[
+<%- include("partials/head.ejs", {title: blog.title,css_links:[
 "/css/blog.css","https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
 ]}) %>
 <%-include("partials/navbar.ejs",{user})%>
@@ -11,7 +11,11 @@
                 <span class="author">
                     By <%=blog.user_name%>
                 </span>
-                <img src="<%=blog.profile_pic%>" alt="">
+                <%if (blog.pfp){%>
+                    <img src="data:<%=`${blog.pfp_mime};base64,${blog.pfp}`%>" alt="">
+                    <%}else{%>
+                      <img src="/images/default_pfp.svg" alt="">
+                      <%}%>
             </div>
         </div>
         <%if (blog.about){%>

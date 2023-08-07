@@ -32,13 +32,12 @@ function auth_token(req, res, next) {
                 httpOnly: true,
                 sameSite: "strict",
               });
-              sql`select profile_pic from users where user_name = ${username}`.then(
+              sql`select encode(pfp, 'base64') as pfp, pfp_mime from users where user_name = ${username}`.then(
                 (rep) => {
                   req.user = {
                     user_name: decoded.user_name,
-                    profile_pic: rep[0].profile_pic
-                      ? rep[0].profile_pic
-                      : "/images/default_pfp.svg",
+                    pfp: rep[0].pfp,
+                    pfp_mime: rep[0].pfp_mime,
                   };
                   next();
                 }
@@ -47,13 +46,12 @@ function auth_token(req, res, next) {
           }
         );
       } else {
-        sql`select profile_pic from users where user_name = ${decoded.user_name}`.then(
+        sql`select encode(pfp, 'base64') as pfp, pfp_mime from users where user_name = ${decoded.user_name}`.then(
           (rep) => {
             req.user = {
               user_name: decoded.user_name,
-              profile_pic: rep[0].profile_pic
-                ? rep[0].profile_pic
-                : "/images/default_pfp.svg",
+              pfp: rep[0].pfp,
+              pfp_mime: rep[0].pfp_mime,
             };
             next();
           }

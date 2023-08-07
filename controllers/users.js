@@ -1,10 +1,7 @@
 const crypto = require("crypto");
 const sql = require("../models/db");
 const gen_auth_token = require("../funcs/gen_auth_token");
-const fs = require("fs");
-const path = require("path");
-const mime = require("mime-types");
-require("dotenv").config();
+const { resize_pfp } = require("../funcs/profile_base64");
 
 // get signup page controller
 const get_sign_up = (req, res) => {
@@ -34,28 +31,7 @@ const is_username_unique = (user_name) => {
       });
   });
 };
-// upload profile picture
-const upload_pfp = async (filename, file) => {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(
-      path.resolve(
-        __dirname,
-        `../static/user_imgs/${filename + "." + mime.extension(file.mimetype)}`
-      ),
-      file.buffer,
-      { encoding: "base64" },
-      async (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(
-            `/user_imgs/${filename + "." + mime.extension(file.mimetype)}`
-          );
-        }
-      }
-    );
-  });
-};
+
 // post signup info controller
 const post_sign_up = (req, res) => {
   const { user_name, pswd } = req.body;
@@ -65,28 +41,21 @@ const post_sign_up = (req, res) => {
         .begin(async (sql) => {
           const hash = crypto.createHash("sha256");
           const password_hash = hash.update(pswd).digest("hex");
-          let profile_pic = null;
-          let user = [
-            {
-              user_name,
-              password_hash,
-            },
-          ];
-          return await upload_pfp(user_name, req.file)
-            .then(async (filepath) => {
-              user[0].profile_pic = filepath;
-              return await sql`
-            INSERT into users ${sql(user)}
+          const resized = req.file ? await resize_pfp(req.file.buffer) : null;
+          const pfp = req.file ? resized.toString("base64") : null;
+
+          if (pfp) {
+            return await sql`
+            INSERT into users (user_name, password_hash, pfp)
+            values (${user_name}, ${password_hash}, decode(${pfp}, 'base64'))
             RETURNING *
             `;
-            })
-            .catch(async (err) => {
-              console.log(err);
-              return await sql`
-            INSERT into users ${sql(user)}
-            RETURNING *
-            `;
-            });
+          }
+          return await sql`
+          INSERT into users (user_name, password_hash)
+          values (${user_name}, ${password_hash})
+          RETURNING *
+          `;
         })
         .then((rep) => {
           const token = gen_auth_token(rep[0].user_name, "access");
@@ -160,6 +129,8 @@ const get_user_posts = (req, res, next) => {
       res.render("your_posts", {
         title: "Your posts",
         user: req.user,
+        pfp: req.user.pfp,
+        pfp_mime: req.user.pfp_mim,
         data,
         edit: true,
       });

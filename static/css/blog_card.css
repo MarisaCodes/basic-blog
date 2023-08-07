@@ -67,6 +67,13 @@ hr {
   color: white;
   border-radius: 5px;
 }
+.blog-info img {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
 code {
   font-size: medium !important;
   white-space: pre-wrap !important;

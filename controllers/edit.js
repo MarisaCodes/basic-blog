@@ -75,7 +75,6 @@ const post_edit = (req, res, next) => {
           `;
     })
     .then((data) => {
-      console.log(data);
       if (data.length) {
         res.status(200).json(JSON.stringify({ id }));
       } else {

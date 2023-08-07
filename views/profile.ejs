@@ -9,11 +9,16 @@
                 <form>
                     <label for="profile_pic" class="profile_pic">
                         <span>Change</span>
-                        <img src="<%=profile_pic%>" alt="">
+                        <%if (user.profile_pic){%>
+                            <img src="<%=user.profile_pic%>" alt="profile picture" />
+                            <%}else{%>
+                            <img src="/images/default_pfp.svg" alt="profile picture" />
+                            <%}%>
                     </label>
                     <input type="file" name="profile_pic" id="profile_pic"
                     accept="image/*"
                     >
+                    <span class="loading hide">loading...</span>
                 </form>
         </div>
         <div class="about">
@@ -33,6 +38,8 @@
 <script>
     const change_pfp = document.forms[0]
     change_pfp.profile_pic.addEventListener("change", (e)=>{
+        change_pfp.querySelector('.loading').classList.remove('hide')
+        change_pfp.profile_pic.setAttribute("disabled", true)
         const formData = new FormData()
         formData.append("profile_pic", change_pfp.profile_pic.files[0])
         fetch("/profile/pfp",{
@@ -45,6 +52,7 @@
             else
                 throw new Error("could not update")
         }).catch(err=>{
+            change_pfp.querySelector('.loading').classList.add('hide')
             console.log(err)
         })
     })

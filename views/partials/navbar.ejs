@@ -43,8 +43,11 @@
 
     <div class="nav-item profile-wrapper two columns dropdown">
       <div class="profile">
+        <%if (user.profile_pic){%>
         <img src="<%=user.profile_pic%>" alt="profile picture" />
-        <%=user.user_name%>
+        <%}else{%>
+        <img src="/images/default_pfp.svg" alt="profile picture" />
+        <%}%> <%=user.user_name%>
       </div>
       <div class="dropdown-content">
         <a href="/profile">Profile</a>
@@ -60,3 +63,4 @@
     <%}%>
   </nav>
   <hr />
+</div>

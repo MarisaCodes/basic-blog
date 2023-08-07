@@ -1,3 +1,4 @@
+const { blog_card_profiles } = require("../funcs/profile_base64");
 const sql = require("../models/db");
 
 // get index
@@ -5,10 +6,10 @@ const sql = require("../models/db");
 const get_index = (req, res) => {
   sql`
    SELECT blogs.id as blog_id, blogs.created_at, blogs.title, blogs.content,
-   blogs.updated_at, users.user_name, blogs.slug,users.profile_pic
+   blogs.updated_at, users.user_name, blogs.slug, encode(pfp, 'base64') as pfp, users.pfp_mime
    FROM (blogs
    JOIN users ON blogs.author_id = users.id)
-   ORDER BY created_at DESC
+   ORDER BY updated_at DESC
    `
     .then((data) => {
       res.render("index", { user: req.user, data, error: null, edit: false });

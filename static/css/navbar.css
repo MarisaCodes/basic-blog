@@ -53,6 +53,7 @@ nav > div:nth-child(1) {
 .profile img {
   height: 40px;
   width: 40px;
+  min-width: 40px;
   object-fit: cover;
   -webkit-user-drag: none;
   border-radius: 50%;

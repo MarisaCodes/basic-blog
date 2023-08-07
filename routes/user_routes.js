@@ -11,6 +11,7 @@ const {
   get_login,
   get_user_posts,
 } = require("../controllers/users");
+const { profile_base64 } = require("../funcs/profile_base64");
 const user_router = express.Router();
 // middleware
 user_router.use(cookieParser());
@@ -23,5 +24,5 @@ user_router.post("/signup", upload.single("profile_pic"), post_sign_up);
 user_router.get("/login", auth_token, get_login);
 user_router.post("/login", post_login);
 // get user blog
-user_router.get("/user/blogs", auth_token, get_user_posts);
+user_router.get("/user/blogs", auth_token, profile_base64, get_user_posts);
 module.exports = user_router;

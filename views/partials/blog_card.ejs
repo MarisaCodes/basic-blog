@@ -4,6 +4,11 @@
     <div class="blog-info">
       <span class="time"><%=new Date(updated_at).toLocaleString()%></span>
       <span class="author">~<%=user_name%></span>
+      <%if (pfp){%>
+      <img src="data:<%=`${pfp_mime};base64,${pfp}`%>" alt="">
+      <%}else{%>
+        <img src="/images/default_pfp.svg" alt="">
+        <%}%>
     </div>
   </div>
   <hr />

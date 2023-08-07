@@ -26,18 +26,14 @@ const get_create = (req, res) => {
     res.redirect("/");
     return;
   }
-  fs.readFile(
-    "./private/md_guide.md",
-    "utf-8",
-    (err, data) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      res.render("create", { md_guide: data, user: req.user, error: null });
+  fs.readFile("./private/md_guide.md", "utf-8", (err, data) => {
+    if (err) {
+      console.log(err);
       return;
     }
-  );
+    res.render("create", { md_guide: data, user: req.user, error: null });
+    return;
+  });
 };
 // POST a blog from create page
 const post_blog = (req, res) => {
@@ -85,13 +81,12 @@ const post_blog = (req, res) => {
 const get_blog = (req, res, next) => {
   const { id } = req.params;
   sql`
-  select * from (blogs join users on
+  select title, blogs.updated_at, users.user_name, encode(pfp, 'base64') as pfp, pfp_mime, about, content 
+  from (blogs join users on
   users.id = blogs.author_id)
   where blogs.id = ${id}
-  
   `
     .then((data) => {
-      console.log(data);
       if (data.length) {
         res.render("blog", { blog: data[0], user: req.user });
       } else {
