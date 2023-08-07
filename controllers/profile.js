@@ -48,6 +48,5 @@ const post_pfp = (req, res) => {
     })
     .catch((err) => console.log(err));
 };
-//fs.rmdirSync("user_imgs", { force: true, recursive: true });
 
 module.exports = { get_profile, post_about, post_pfp };

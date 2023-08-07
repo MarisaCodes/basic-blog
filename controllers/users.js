@@ -43,11 +43,12 @@ const post_sign_up = (req, res) => {
           const password_hash = hash.update(pswd).digest("hex");
           const resized = req.file ? await resize_pfp(req.file.buffer) : null;
           const pfp = req.file ? resized.toString("base64") : null;
-
+          console.log(req.file)
           if (pfp) {
             return await sql`
-            INSERT into users (user_name, password_hash, pfp)
-            values (${user_name}, ${password_hash}, decode(${pfp}, 'base64'))
+            INSERT into users (user_name, password_hash, pfp, pfp_mime)
+            values (${user_name}, ${password_hash}, decode(${pfp}, 'base64'), 
+            ${req.file.mimetype})
             RETURNING *
             `;
           }
