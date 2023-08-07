@@ -73,6 +73,10 @@
   padding: 5px;
   font-size: large;
 }
+.loading {
+  max-width: 100px;
+  word-wrap: break-word;
+}
 @media (min-width: 767px) {
   .wrapper {
     width: 80%;

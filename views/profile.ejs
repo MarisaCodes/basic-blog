@@ -39,6 +39,8 @@
     const change_pfp = document.forms[0]
     change_pfp.profile_pic.addEventListener("change", (e)=>{
         change_pfp.querySelector('.loading').classList.remove('hide')
+        change_pfp.querySelector('.loading').innerHTML = "loading..."
+
         change_pfp.profile_pic.setAttribute("disabled", true)
         const formData = new FormData()
         formData.append("profile_pic", change_pfp.profile_pic.files[0])
