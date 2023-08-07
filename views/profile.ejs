@@ -52,7 +52,7 @@
             else
                 throw new Error("could not update")
         }).catch(err=>{
-            change_pfp.querySelector('.loading').classList.add('hide')
+            //change_pfp.querySelector('.loading').classList.add('hide')
             change_pfp.querySelector('.loading').innerHTML = err+" please refresh the page"
             change_pfp.profile_pic.removeAttribute("disabled")
             console.log(err)
