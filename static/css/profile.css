@@ -76,6 +76,7 @@
 .loading {
   max-width: 100px;
   word-wrap: break-word;
+  color: tomato;
 }
 @media (min-width: 767px) {
   .wrapper {
