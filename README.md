@@ -2,7 +2,7 @@
 
 - [Backend overview](#backend-overview)
 - [Frontend overview](#frontend-overview)
-- [PostgreSQL DB structure]()
+- [PostgreSQL DB structure](#postgresql-db-structure)
 - [Blogs]()
 - [Users]()
 - [XSS]()
@@ -81,5 +81,9 @@ CREATE TABLE IF NOT EXISTS users(
     password_hash TEXT NOT NULL
 );
 ```
+Everything is fairly simple here. The `id` is a primary key in this table and will be a foreign key in the `blogs` table. Perhaps it is noticeable that `pfp BYTEA` is the odd one out. This is a type for storing binary strings. It can be used to store large objects. I believe the limit for storage is around 1 or 2gb. I use it to store the user's profile picture, decoded from `base64`. I use the `sharp` npm module to resize user profile images to `200x200` images. These images should take up around 15kb on average but I have seen values as high as 58kb while testing.
+
+The standard/best practice way to store files is using the file system. I have a good understanding of the file system using node.js `fs` module. However, since this site is deployed using serverless technologies `cyclic.sh, render`, I am unable to access the file system. One of the standard solutions for this is using cloud storage such as the famous `AWS S3` buckets to store files and constructing `url` strings to access these files. Configuring and testing that, however, took me a bit more time than I had anticipated and I thought it was quite unnecessary for me to pursue a deadend while I already understood the fundamentals of file manipulation and file storage (a few commits ago complete profiles part was running purely on `fs`). Additionally, I had to suffer through a few engineering exams (heat transfer, mass transfer) during this already hot summer. It is still a great turning point however, I will be on the lookout for improving on cloud storage in the future. At least I learned how to handle `BYTEA` type in `PostgreSQL` and how to render `base64` images.
+
 
 
