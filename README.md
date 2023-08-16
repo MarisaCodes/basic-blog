@@ -95,6 +95,10 @@ The standard/best practice way to store files is using the file system. I have a
 
 ## Blogs
 
+![](./private/mdsupport.png)
+
+![](./private/yay.png)
+
 This web app is currently CRU(~~D~~). Users can create, update/edit posts (I did not yet add a delete mechanism). The main focus was on letting the user use markdown to post blogs. This was easy as I used the npm package markdown-it:
 
 ```
